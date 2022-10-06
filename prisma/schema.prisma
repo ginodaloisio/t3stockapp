@@ -65,9 +65,8 @@ model Post {
     brand     Brands    @default(GENERAL)
     prices    Prices[]
     title     String
-    content   String?
-    price     Int?
-    type      String    @default("Todos")
+    content   String
+    type      String?   @default("Todos")
     height    Int?
     width     Int?
     length_   Int?

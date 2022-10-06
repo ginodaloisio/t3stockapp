@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Header } from "../components/common/Header/Header";
 
+//TODO: convert this into a component + add modal for log out confirmation
 function AccountPage() {
   moment.locale("es");
   const router = useRouter();
@@ -31,7 +32,7 @@ function AccountPage() {
       <Header />
       <main className="mx-auto max-w-xl px-16 pb-10">
         {session && (
-          <li className="flex max-w-sm cursor-default flex-col gap-4 overflow-hidden rounded bg-gray-300 shadow-xl dark:bg-gray-700 dark:text-gray-400">
+          <li className="flex max-w-sm cursor-default flex-col gap-4 overflow-hidden rounded bg-gray-300 shadow-xl dark:bg-gray-800 dark:text-gray-500">
             <Image
               height={700}
               width={700}
@@ -40,13 +41,13 @@ function AccountPage() {
               alt="profile picture"
             />
             <section className="flex flex-col px-4">
-              <label className="text-sm text-gray-500 dark:text-gray-400 md:text-lg">
+              <label className="text-sm text-gray-500 dark:text-gray-500 md:text-lg">
                 Nombre de usuario
               </label>
               <span className="mb-2 cursor-pointer text-lg font-bold text-gray-700 dark:text-gray-100">
                 {userName}
               </span>
-              <label className="text-sm text-gray-500 dark:text-gray-400 md:text-lg">
+              <label className="text-sm text-gray-500 dark:text-gray-500 md:text-lg">
                 Email
               </label>
 
@@ -55,7 +56,7 @@ function AccountPage() {
               </span>
             </section>
             <footer className="mb-4 grid grid-flow-row-dense grid-cols-3 border border-b-0 border-r-0 border-l-0 border-gray-400 pr-5 pl-5 dark:border-white/20">
-              <p className="col-span-2 mt-3 text-sm md:text-lg">
+              <p className="col-span-2 mt-3 text-sm text-gray-800 dark:text-gray-400 md:text-lg">
                 La sesión expira {userSessionExpiresIn}
               </p>
               <button

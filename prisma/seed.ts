@@ -5,8 +5,8 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.post.create({
     data: {
-      title: "cama",
-      content: "cama de madera 123",
+      title: "respaldo",
+      content: "respaldo de cuero",
       height: 234,
       length_: 123,
       width: 123,

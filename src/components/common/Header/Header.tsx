@@ -7,6 +7,7 @@ import {
   MinusSmallIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
+import ThemeButton from "./components/ThemeButton";
 
 export const Header = () => {
   const session = useSession();
@@ -21,10 +22,11 @@ export const Header = () => {
         <HeaderItem title="AGREGAR" Icon={PlusIcon} goto="/add" />
         <HeaderItem title="REMOVER" Icon={MinusSmallIcon} goto="/delete" />
         <HeaderItem title="CUENTA" Icon={UserIcon} goto="/account" />
+        <ThemeButton />
       </div>
-      <h2 className="mb-5 text-2xl font-extrabold leading-normal text-gray-700 dark:text-gray-500 md:text-[2rem]">
+      <h1 className="mb-5 text-2xl font-extrabold leading-normal text-gray-700 dark:text-gray-500 md:text-[2rem]">
         <span className="text-purple-300">Comodo</span> Stock
-      </h2>
+      </h1>
     </header>
   );
 };

@@ -1,37 +1,43 @@
 import React, { ReactNode } from "react";
 import { Button as DaisyButton } from "react-daisyui";
-export enum Variant {
+import { SpinnerIcon } from "../../screens/search/icons/SpinnerIcon";
+export enum ButtonVariant {
   Primary,
   Secondary,
   Danger,
   Default,
 }
-
+//TODO: porq uso forwardRef
 const Button = React.forwardRef(
   (
     {
       children,
-      variant,
+      variant = ButtonVariant.Primary,
+      className,
+      isLoading = false,
       ...rest
     }: {
       children: ReactNode;
-      variant: Variant;
+      variant: ButtonVariant;
+      className: string;
+      isLoading?: boolean;
       [key: string]: any;
     },
     ref
   ) => {
     const colors = {
-      [Variant.Primary]:
+      [ButtonVariant.Primary]:
         "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400",
-      [Variant.Secondary]:
+      [ButtonVariant.Secondary]:
         "bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-400",
-      [Variant.Danger]:
+      [ButtonVariant.Danger]:
         "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-400",
-      [Variant.Default]: "",
+      [ButtonVariant.Default]: "",
     };
     return (
-      <DaisyButton className={colors[variant]} {...rest}>
-        {children}
+      <DaisyButton className={`${colors[variant]} ${className}`} {...rest}>
+        {isLoading && <SpinnerIcon />}
+        {!isLoading && children}
       </DaisyButton>
     );
   }

@@ -1,10 +1,9 @@
 import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Input, Button as DaisydefButton } from "react-daisyui";
-import { Button, Variant } from "../components/common/Button/Button";
+import { Input } from "react-daisyui";
+import { Button, ButtonVariant } from "../components/common/Button/Button";
 import { useForm } from "react-hook-form";
-import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useEffect } from "react";
 
 type RegisterForm = {
@@ -47,7 +46,7 @@ function LoginPage() {
         >
           <Input
             id="username"
-            className="w-full"
+            className="w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             placeholder="Username"
             {...register("username", { required: true })}
           />
@@ -56,22 +55,23 @@ function LoginPage() {
           )}
           <Input
             id="password"
-            className="w-full"
+            className="w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             placeholder="Password"
             {...register("password", { required: true })}
           />
           {errors.password && (
             <span className="text-red-500">This field is required</span>
           )}
-          <Button type="submit" variant={Variant.Primary}>
+          <Button type="submit" variant={ButtonVariant.Primary}>
             Iniciar
           </Button>
-          <DaisydefButton
+          <Button
             type="button"
+            variant={ButtonVariant.Secondary}
             onClick={() => signIn("github", { callbackUrl: "/" })}
           >
             Iniciar con Github
-          </DaisydefButton>
+          </Button>
         </form>
       </main>
     </>

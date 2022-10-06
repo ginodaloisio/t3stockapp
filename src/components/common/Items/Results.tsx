@@ -1,5 +1,4 @@
 import { Post } from "@prisma/client";
-import { DefaultSession } from "next-auth";
 import Items from "./components/Items";
 
 function ItemRender({ results }: { results: Post[] }) {
