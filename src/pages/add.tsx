@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import AddScreen from "../components/screens/add/AddSreen";
+import AddScreen from "../components/screens/add/AddScreen";
 import { ContentLayout } from "../components/common/Layouts/ContentLayout";
 
 const AddPage = () => {
