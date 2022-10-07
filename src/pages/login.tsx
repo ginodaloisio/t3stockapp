@@ -10,7 +10,7 @@ type RegisterForm = {
   username: string;
   password: string;
 };
-
+//TODO: hacer algo con el submit del login
 function LoginPage() {
   const router = useRouter();
   const {
@@ -21,7 +21,7 @@ function LoginPage() {
 
   const onSubmit = async (data: RegisterForm) => {};
 
-  const { data: session, status } = useSession();
+  const { status } = useSession();
 
   useEffect(() => {
     if (status === "authenticated") {
@@ -51,7 +51,7 @@ function LoginPage() {
             {...register("username", { required: true })}
           />
           {errors.username && (
-            <span className="text-red-500">This field is required</span>
+            <span className="text-red-500">Este campo es obligatorio!</span>
           )}
           <Input
             id="password"
@@ -60,7 +60,7 @@ function LoginPage() {
             {...register("password", { required: true })}
           />
           {errors.password && (
-            <span className="text-red-500">This field is required</span>
+            <span className="text-red-500">Este campo es obligatorio!</span>
           )}
           <Button type="submit" variant={ButtonVariant.Primary}>
             Iniciar
