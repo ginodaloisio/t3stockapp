@@ -3,16 +3,18 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.post.create({
-    data: {
-      title: "respaldo",
-      content: "respaldo de cuero",
-      height: 234,
-      length_: 123,
-      width: 123,
-      authorId: "cl8ngs7rv000055ig391rnsu8",
-    },
-  });
+  for (let index = 0; index < 5; index++) {
+    await prisma.post.create({
+      data: {
+        title: "cama de madera" + index,
+        content: "acolchado cuero",
+        height: 234,
+        length_: 123,
+        width: 123,
+        authorId: "cl98rywqa0000vhycvb132vgj",
+      },
+    });
+  }
 }
 
 main()
