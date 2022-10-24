@@ -15,7 +15,7 @@ export const ContentLayout = ({
       <main
         className={classNames(
           useContainer && "container",
-          "mx-auto mt-16 flex flex-col items-center justify-center gap-6 p-4 md:mt-32"
+          "mx-auto mt-6 flex flex-col items-center justify-center gap-6 p-4 md:mt-32"
         )}
       >
         {children}

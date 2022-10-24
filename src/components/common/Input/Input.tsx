@@ -2,14 +2,14 @@ import React, { ReactNode } from "react";
 import { Input as DaisyInput } from "react-daisyui";
 
 export enum InputVariant {
-  Search,
+  Default,
 }
 //TODO: porq uso forward ref
 const Input = React.forwardRef(
   (
     {
       children,
-      variant = InputVariant.Search,
+      variant = InputVariant.Default,
       className,
       ...rest
     }: {
@@ -21,7 +21,7 @@ const Input = React.forwardRef(
     ref
   ) => {
     const colors = {
-      [InputVariant.Search]:
+      [InputVariant.Default]:
         "w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500",
     };
     return (

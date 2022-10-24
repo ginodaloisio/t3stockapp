@@ -18,8 +18,8 @@ const Items = ({ result }: { result: Post }) => {
   const onCancel = () => {
     setIsModalOpen(false);
   };
-  const handleConfirmModal = (id: number) => {
-    router.push(`/modify?id=${id}`);
+  const handleConfirmModal = (id: string) => {
+    router.push(`/item/${id}`);
   };
 
   return (

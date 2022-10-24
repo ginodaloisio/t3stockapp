@@ -11,7 +11,7 @@ export const ItemInfoModal = ({
   item,
 }: {
   onCancel: () => void;
-  onComplete: (id: number) => void;
+  onComplete: (id: string) => void;
   isOpen: boolean;
   item: Post;
 }) => {
@@ -51,7 +51,7 @@ export const ItemInfoModal = ({
           onClick={onConfirm}
           type="button"
         >
-          Editar
+          Mas información
         </Button>
       </ModalActions>
     </Modal>
