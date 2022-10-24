@@ -17,7 +17,6 @@ function Home() {
   }, [status]);
   const stockItems = trpc.useQuery(["stock.getItems"]);
   const results = stockItems.data;
-  console.log(session);
   return (
     <>
       <Head>
