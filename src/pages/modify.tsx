@@ -12,7 +12,7 @@ function ModifyPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const { id } = router.query;
-  const stockItem = trpc.useQuery(["stock.getItem", { id: String(id) || "1" }]);
+  const stockItem = trpc.useQuery(["stock.getItem", { id: String(id) }]);
   const isNotLoading = !stockItem.isLoading;
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -27,7 +27,9 @@ function ModifyPage() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ContentLayout useContainer={true}>
-        {session && isNotLoading && <ModifyScreen entity={stockItem.data!} />}
+        {session && isNotLoading && (
+          <ModifyScreen entity={stockItem.data!} authorId={session.user?.id!} />
+        )}
       </ContentLayout>
     </>
   );

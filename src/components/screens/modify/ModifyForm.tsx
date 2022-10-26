@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from "../../../utils/useCapitalizeFirstLetter";
 import { Input } from "react-daisyui";
 import { useRouter } from "next/router";
 
-type UpdateForm = {
+export type UpdateForm = {
   title: string;
   content: string;
   type: string | null;

@@ -1,12 +1,17 @@
 import classNames from "classnames";
 import React from "react";
 import { atom, useAtom } from "jotai";
-import { DocumentTextIcon, PhotoIcon } from "@heroicons/react/24/outline";
+import {
+  CurrencyDollarIcon,
+  DocumentTextIcon,
+  PhotoIcon,
+} from "@heroicons/react/24/outline";
 import { useSession } from "next-auth/react";
 
 export enum TabName {
   Contenido,
   Imagenes,
+  Precio,
 }
 
 export const tabAtom = atom<TabName>(TabName.Contenido);
@@ -22,6 +27,11 @@ const Links = [
     tab: TabName.Imagenes,
     icon: <PhotoIcon className="mb-1 h-8" />,
   },
+  {
+    name: "Precio",
+    tab: TabName.Precio,
+    icon: <CurrencyDollarIcon className="mb-1 h-8" />,
+  },
 ];
 export const TopNavigation = () => {
   const [selectedTab, setSelectedTab] = useAtom(tabAtom);
@@ -31,7 +41,7 @@ export const TopNavigation = () => {
 
   return (
     <div className="overflow-y-auto py-4 px-3">
-      <ul className="grid grid-cols-2 gap-4">
+      <ul className="grid grid-cols-3 gap-4">
         {Links.map((link) => (
           <li key={link.name} onClick={() => setSelectedTab(link.tab)}>
             <a
