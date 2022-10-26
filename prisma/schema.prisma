@@ -79,7 +79,7 @@ model Post {
 }
 
 model Prices {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(cuid())
     price     Int
     createdAt DateTime @default(now())
     author    User     @relation(fields: [authorId], references: [id])
