@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Button as DaisyButton } from "react-daisyui";
-import { SpinnerIcon } from "../../screens/search/icons/SpinnerIcon";
+import { SpinnerIcon } from "../Icons/SpinnerIcon";
 export enum ButtonVariant {
   Primary,
   Secondary,
@@ -27,7 +27,7 @@ const Button = React.forwardRef(
   ) => {
     const colors = {
       [ButtonVariant.Primary]:
-        "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400",
+        "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400 disabled:dark:bg-gray-500 disabled:bg-gray-300",
       [ButtonVariant.Secondary]:
         "bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-400",
       [ButtonVariant.Danger]:
@@ -35,7 +35,11 @@ const Button = React.forwardRef(
       [ButtonVariant.Default]: "",
     };
     return (
-      <DaisyButton className={`${colors[variant]} ${className}`} {...rest}>
+      <DaisyButton
+        disabled={isLoading}
+        className={`${colors[variant]} ${className}`}
+        {...rest}
+      >
         {isLoading && <SpinnerIcon />}
         {!isLoading && children}
       </DaisyButton>

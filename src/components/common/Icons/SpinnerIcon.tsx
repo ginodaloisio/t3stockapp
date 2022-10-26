@@ -1,7 +1,11 @@
-export const SpinnerIcon = () => {
+import classNames from "classnames";
+import { withSize } from "./Icons";
+
+export const SpinnerIcon = withSize(({ sizeClass }) => {
   return (
     <svg
-      className="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+      // className="-ml-1 mr-3 h-5 w-5 animate-spin text-white"
+      className={classNames(sizeClass, "animate-spin")}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
@@ -21,4 +25,4 @@ export const SpinnerIcon = () => {
       ></path>
     </svg>
   );
-};
+});
