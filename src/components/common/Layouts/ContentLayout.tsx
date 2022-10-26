@@ -5,13 +5,11 @@ import { Header } from "../Header/Header";
 export const ContentLayout = ({
   children,
   useContainer = true,
-}: {
-  children: ReactNode;
-  useContainer: boolean;
+  useHeader = true,
 }) => {
   return (
     <>
-      <Header />
+      {useHeader && <Header />}
       <main
         className={classNames(
           useContainer && "container",
