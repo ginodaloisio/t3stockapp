@@ -119,6 +119,6 @@ export const stockRouter = createRouter()
           image: input.image,
         },
       });
-      return updatedItem;
+      return updatedItem.id;
     },
   });
