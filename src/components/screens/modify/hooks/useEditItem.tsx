@@ -1,13 +1,20 @@
+import { useRouter } from "next/router";
 import { trpc } from "../../../../utils/trpc";
+import { UpdateForm } from "../ModifyForm";
 
-export const useEditItem = ({ itemId }: { itemId: string }) => {
-  const editItemMutation = trpc.useMutation("stock.editItem");
+export const useEditItem = ({ id }: { id: string }) => {
+  const router = useRouter();
+  const editItemMutation = trpc.useMutation("stock.editItem", {
+    onSuccess: (id) => {
+      router.push(`/item/${id}`);
+    },
+  });
   const isLoading = editItemMutation.isLoading;
   const showError = editItemMutation.isError;
-  const handleEditItemComplete = async (updatedItemData) => {
+  const handleEditItemComplete = async (updatedItemData: UpdateForm) => {
     await editItemMutation.mutateAsync({
       ...updatedItemData,
-      itemId,
+      id,
     });
   };
 

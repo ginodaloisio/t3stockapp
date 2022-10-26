@@ -1,4 +1,3 @@
-import { Post } from "@prisma/client";
 import { useState } from "react";
 import ItemRender from "../../common/Items/Results";
 import { ContentLayout } from "../../common/Layouts/ContentLayout";

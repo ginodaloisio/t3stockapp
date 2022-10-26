@@ -7,7 +7,6 @@ import { Header } from "../components/common/Header/Header";
 import { ContentLayout } from "../components/common/Layouts/ContentLayout";
 import AccountScreen from "../components/screens/account/AccountScreen";
 
-//TODO: convert this into a component + add modal for log out confirmation
 function AccountPage() {
   moment.locale("es");
   const router = useRouter();
