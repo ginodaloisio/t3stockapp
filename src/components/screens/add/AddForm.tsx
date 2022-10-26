@@ -4,7 +4,7 @@ import { Brands } from "../../../../prisma/prismaEnums";
 import { Button, ButtonVariant } from "../../common/Button/Button";
 import { capitalizeFirstLetter } from "../../../utils/useCapitalizeFirstLetter";
 
-type AddForm = {
+export type AddForm = {
   title: string;
   content: string;
   type: string;
