@@ -1,6 +1,5 @@
 import { createRouter } from "./context";
 import { z } from "zod";
-import { resolve } from "path";
 import { TRPCError } from "@trpc/server";
 import { Brands } from "../../../prisma/prismaEnums";
 
@@ -17,8 +16,26 @@ export const stockRouter = createRouter()
     });
   })
   .query("getItems", {
-    async resolve({ ctx }) {
-      return await ctx.prisma.post.findMany();
+    input: z.object({
+      limit: z.number().min(1).max(100).nullish(),
+      cursor: z.string().nullish(),
+    }),
+    async resolve({ ctx, input }) {
+      const limit = input.limit ?? 10;
+      const { cursor } = input;
+      const posts = await ctx.prisma.post.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (posts.length > limit) {
+        const nextItem = posts.pop();
+        nextCursor = nextItem!.id;
+      }
+      return {
+        posts,
+        nextCursor,
+      };
     },
   })
   .query("getItem", {
@@ -30,6 +47,14 @@ export const stockRouter = createRouter()
         where: {
           id: input.id,
         },
+        // include: {
+        //   prices: {
+        //     orderBy: {
+        //       createdAt: "desc",
+        //     },
+        //     take: 1,
+        //   },
+        // },
       });
       return result;
     },
@@ -66,13 +91,14 @@ export const stockRouter = createRouter()
     input: z.object({
       title: z.string(),
       content: z.string(),
+      price: z.number(),
       type: z.string().nullish(),
       brand: z.nativeEnum(Brands),
       height: z.number().nullish(),
       length_: z.number().nullish(),
       width: z.number().nullish(),
       imageURL: z.string(),
-      authorEmail: z.string(),
+      authorId: z.string(),
     }),
     async resolve({ input, ctx }) {
       const item = await ctx.prisma.post.create({
@@ -85,7 +111,13 @@ export const stockRouter = createRouter()
           length_: input?.length_,
           width: input?.width,
           image: input.imageURL,
-          author: { connect: { email: input.authorEmail } },
+          prices: {
+            create: {
+              price: input.price,
+              authorId: input.authorId,
+            },
+          },
+          author: { connect: { id: input.authorId } },
         },
       });
       return item.id;
