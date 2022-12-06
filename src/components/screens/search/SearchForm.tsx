@@ -1,6 +1,5 @@
-import { Input } from "react-daisyui";
 import { useForm } from "react-hook-form";
-import { Button, ButtonVariant } from "../../common/Button/Button";
+import { Button, Variant } from "../../common/Button/Button";
 
 export type SearchForm = {
   searchString: string;
@@ -32,23 +31,29 @@ export const SearchForm = ({
           </span>
         </label>
       )}
-      <Input
-        className="w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-        placeholder="Buscar"
-        {...register("searchString", { required: true })}
-      />
-      {errors.searchString && (
-        <label className="label">
-          <span className="label-text-alt text-sm text-red-500">
-            Este campo es obligatorio!
-          </span>
+      <div>
+        <label
+          htmlFor="searchInput"
+          className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+        >
+          Nombre / descripcion del articulo
         </label>
-      )}
-      <Button
-        type="submit"
-        variant={ButtonVariant.Primary}
-        isLoading={isLoading}
-      >
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="ej: Colchon cannon"
+          className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+          {...register("searchString", { required: true })}
+        />
+        {errors.searchString && (
+          <label className="label">
+            <span className="label-text-alt text-sm text-red-500">
+              Este campo es obligatorio!
+            </span>
+          </label>
+        )}
+      </div>
+      <Button type="submit" variant={Variant.Primary} isLoading={isLoading}>
         Buscar
       </Button>
     </form>

@@ -1,9 +1,8 @@
 import React from "react";
 import { Brands, Post } from "@prisma/client";
 import { useForm } from "react-hook-form";
-import { Button, ButtonVariant } from "../../common/Button/Button";
+import { Button, Variant } from "../../common/Button/Button";
 import { capitalizeFirstLetter } from "../../../utils/useCapitalizeFirstLetter";
-import { Input } from "react-daisyui";
 import { useRouter } from "next/router";
 
 export type UpdateForm = {
@@ -57,99 +56,153 @@ export const ModifyForm = ({
             </span>
           </label>
         )}
-        <Input
-          className="w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          placeholder="Titulo"
-          {...register("title", { required: true })}
-        />
-        {errors.title && (
-          <label className="label">
-            <span className="label-text-alt text-sm text-red-500">
-              Este campo es obligatorio!
-            </span>
+        <div className="mb-5">
+          <label
+            htmlFor="title"
+            className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+          >
+            Nombre del articulo
           </label>
-        )}
-        <Input
-          className="mt-6 w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          placeholder="Descripcion"
-          {...register("content", { required: true })}
-        />
-        {errors.content && (
-          <span className="text-sm text-red-500">
-            Este campo es obligatorio!
-          </span>
-        )}
-        <Input
-          className="mt-6 w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          placeholder="Tipo"
-          {...register("type", {
-            required: false,
-            setValueAs: (v) => (v === "" ? null : v),
-          })}
-        />
-        {errors.type && (
-          <label className="label">
-            <span className="label-text-alt text-sm text-red-500">
-              Este campo es obligatorio!
-            </span>
-          </label>
-        )}
-        <select
-          className="mt-6 block w-full rounded-lg border border-gray-300 bg-gray-200 p-3 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:placeholder-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          {...register("brand", { required: true })}
-        >
-          {Object.entries(Brands).map(([key, title]) => {
-            return (
-              <option key={key} value={title}>
-                {capitalizeFirstLetter(title.toLowerCase())}
-              </option>
-            );
-          })}
-        </select>
-        <div className="flex gap-3">
-          <Input
-            placeholder="Largo"
-            className="dark:focus:ring-blue-500mt mt-6 w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500"
-            {...register("length_", {
-              required: false,
-              setValueAs: (v) => (v === "" ? null : parseInt(v)),
-            })}
-            type="number"
+          <input
+            type="text"
+            id="title"
+            placeholder="ej: Colchon cannon"
+            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+            {...register("title", { required: true })}
           />
-          <Input
-            placeholder="Ancho"
-            className="dark:focus:ring-blue-500mt mt-6 w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500"
-            {...register("width", {
-              required: false,
-              setValueAs: (v) => (v === "" ? null : parseInt(v)),
-            })}
-            type="number"
-          />
-          <Input
-            placeholder="Alto"
-            className="dark:focus:ring-blue-500mt mt-6 w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500"
-            {...register("height", {
-              required: false,
-              setValueAs: (v) => (v === "" ? null : parseInt(v)),
-            })}
-            type="number"
-          />
+          {errors.title && (
+            <label className="label">
+              <span className="label-text-alt text-sm text-red-500">
+                Este campo es obligatorio!
+              </span>
+            </label>
+          )}
         </div>
-        <Input
-          {...register("image", { required: true })}
-          placeholder="URL Imagen"
-          type="text"
-          className="mt-6 w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-        />
-        {errors.image && (
-          <span className="text-sm text-red-500">
-            Este campo es obligatorio!
-          </span>
-        )}
+        <div className="mb-5">
+          <label
+            htmlFor="content"
+            className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+          >
+            Descripcion del articulo
+          </label>
+          <input
+            type="text"
+            id="content"
+            placeholder="ej: Base blanca con..."
+            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+            {...register("content", { required: true })}
+          />
+          {errors.content && (
+            <label className="label">
+              <span className="label-text-alt text-sm text-red-500">
+                Este campo es obligatorio!
+              </span>
+            </label>
+          )}
+        </div>
+        <div className="mb-5">
+          <label
+            htmlFor="brand"
+            className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+          >
+            Marca del articulo
+          </label>
+          <select
+            id="brand"
+            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+            {...register("brand", { required: true })}
+          >
+            {Object.entries(Brands).map(([key, title]) => {
+              return (
+                <option key={key} value={title}>
+                  {capitalizeFirstLetter(title.toLowerCase())}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="mb-5 flex gap-3">
+          <div>
+            <label
+              htmlFor="length_"
+              className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+            >
+              Largo
+            </label>
+            <input
+              type="number"
+              id="length_"
+              placeholder="ej: 190cm"
+              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+              {...register("length_", {
+                required: false,
+                setValueAs: (v) => (v === "" ? null : parseInt(v)),
+              })}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="width"
+              className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+            >
+              Ancho
+            </label>
+            <input
+              type="number"
+              id="width"
+              placeholder="ej: 60cm"
+              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+              {...register("width", {
+                required: false,
+                setValueAs: (v) => (v === "" ? null : parseInt(v)),
+              })}
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="height"
+              className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+            >
+              Alto
+            </label>
+            <input
+              type="number"
+              id="height"
+              placeholder="ej: 20cm"
+              className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+              {...register("height", {
+                required: false,
+                setValueAs: (v) => (v === "" ? null : parseInt(v)),
+              })}
+            />
+          </div>
+        </div>
+        <div>
+          <label
+            htmlFor="image"
+            className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+          >
+            Url de la imagen
+          </label>
+          <input
+            type="text"
+            id="image"
+            placeholder="ej: imgur.com/dadasd"
+            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+            {...register("image", { required: true })}
+          />
+          {errors.image && (
+            <label className="label">
+              <span className="label-text-alt text-sm text-red-500">
+                Este campo es obligatorio!
+              </span>
+            </label>
+          )}
+        </div>
         <Button
           className="mt-6"
           type="submit"
-          variant={ButtonVariant.Primary}
+          variant={Variant.Primary}
           isLoading={isLoading}
         >
           Modificar
@@ -157,7 +210,7 @@ export const ModifyForm = ({
         <Button
           className="mt-2"
           type="button"
-          variant={ButtonVariant.Secondary}
+          variant={Variant.Secondary}
           onClick={handleReturnButton}
         >
           Cancelar

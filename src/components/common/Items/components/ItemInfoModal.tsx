@@ -1,7 +1,7 @@
 import { Post } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
-import { Button, ButtonVariant } from "../../Button/Button";
+import { Button, Variant } from "../../Button/Button";
 import { Modal, ModalActions } from "../../Modal";
 
 export const ItemInfoModal = ({
@@ -40,17 +40,13 @@ export const ItemInfoModal = ({
       />
       <ModalActions>
         <Button
-          variant={ButtonVariant.Secondary}
+          variant={Variant.Secondary}
           onClick={handleCancel}
           type="button"
         >
           Cerrar
         </Button>
-        <Button
-          variant={ButtonVariant.Primary}
-          onClick={onConfirm}
-          type="button"
-        >
+        <Button variant={Variant.Primary} onClick={onConfirm} type="button">
           Mas información
         </Button>
       </ModalActions>

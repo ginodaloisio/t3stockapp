@@ -1,6 +1,5 @@
-import { Input } from "react-daisyui";
 import { useForm } from "react-hook-form";
-import { Button, ButtonVariant } from "../../common/Button/Button";
+import { Button, Variant } from "../../common/Button/Button";
 
 export type AddPriceForm = {
   price: number;
@@ -37,10 +36,7 @@ export const AddPriceForm = ({
 
   return (
     <>
-      <form
-        className="form-control flex w-2/3 flex-col sm:w-1/3"
-        onSubmit={onSubmit}
-      >
+      <form onSubmit={onSubmit}>
         {showError && (
           <label className="label">
             <span className="label-text-alt text-sm text-red-500">
@@ -48,25 +44,29 @@ export const AddPriceForm = ({
             </span>
           </label>
         )}
-        <Input
-          className="w-full bg-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-          placeholder="Nuevo precio"
-          {...register("price", {
-            required: true,
-            setValueAs: (v) => (v === "" ? null : parseInt(v)),
-          })}
-        />
-        {errors.price && (
-          <label className="label">
-            <span className="label-text-alt text-sm text-red-500">
-              Este campo es obligatorio!
-            </span>
-          </label>
-        )}
+        <div>
+          <input
+            type="number"
+            id="price"
+            placeholder="ej: 45000"
+            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
+            {...register("price", {
+              required: true,
+              setValueAs: (v) => (v === "" ? null : parseInt(v)),
+            })}
+          />
+          {errors.price && (
+            <label className="label">
+              <span className="label-text-alt text-sm text-red-500">
+                Este campo es obligatorio!
+              </span>
+            </label>
+          )}
+        </div>
         <Button
           className="mt-6"
           type="submit"
-          variant={ButtonVariant.Primary}
+          variant={Variant.Primary}
           isLoading={isLoading}
         >
           Agregar

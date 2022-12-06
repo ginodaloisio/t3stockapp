@@ -11,7 +11,7 @@ type IconWithSizeClass = {
 };
 
 export const withSize = (Icon: FC<IconWithSizeClass>) => {
-  const component = ({ size = "md" }: { size?: keyof typeof sizes }) => (
+  const component = ({ size = "lg" }: { size?: keyof typeof sizes }) => (
     <Icon sizeClass={sizes[size]} />
   );
   component.displayName = Icon.displayName;
