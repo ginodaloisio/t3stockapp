@@ -40,21 +40,21 @@ export const TopNavigation = () => {
   if (!session.data) return null;
 
   return (
-    <div className="overflow-y-auto py-4 px-3">
-      <ul className="grid grid-cols-3 gap-4">
+    <div className="overflow-y-auto py-4">
+      <ul className="grid grid-cols-3 gap-1 sm:gap-4">
         {Links.map((link) => (
           <li key={link.name} onClick={() => setSelectedTab(link.tab)}>
             <a
               href="#"
               className={classNames(
-                "flex items-center rounded-lg p-2 text-base font-normal hover:bg-gray-100 dark:hover:bg-gray-700",
+                "flex items-center rounded-lg p-2 text-sm font-normal hover:bg-gray-100 dark:hover:bg-gray-700 sm:text-base",
                 link.tab === selectedTab
                   ? "text-blue-700 dark:text-blue-300 hover:dark:text-blue-200"
                   : "text-gray-900 dark:text-white"
               )}
             >
               {link.icon}
-              <span className="ml-3">{link.name}</span>
+              <span className="ml-1 sm:ml-3">{link.name}</span>
             </a>
           </li>
         ))}

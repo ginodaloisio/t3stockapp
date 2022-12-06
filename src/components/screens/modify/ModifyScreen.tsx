@@ -1,12 +1,10 @@
 import { Post } from "@prisma/client";
 import { useAtom } from "jotai";
-import moment from "moment";
 import "moment/locale/es";
 import Image from "next/image";
 import { trpc } from "../../../utils/trpc";
 import { EmptyStateWrapper } from "../../common/EmptyStateWrapper";
 import { EmptyStatePriceHistory } from "../../common/PriceHistory/EmptyStatePriceHistory";
-import { PriceHistory } from "../../common/PriceHistory/PriceHistory";
 import { PriceHistoryScreen } from "../../common/PriceHistory/PriceHistoryScreen";
 import { useEditItem } from "./hooks/useEditItem";
 import { ModifyForm } from "./ModifyForm";
@@ -27,7 +25,6 @@ const ModifyScreen = ({
   const { isLoading, showError, handleEditItemComplete } = useEditItem({
     id: entity.id,
   });
-
   return (
     <>
       <TopNavigation />
@@ -40,7 +37,7 @@ const ModifyScreen = ({
         />
       )}
       {selectedTab === TabName.Imagenes && (
-        <div className="mx-auto max-w-2xl px-16 pb-10">
+        <div className="mx-auto max-w-2xl px-6 pb-10 sm:px-8">
           <Image
             src={`${entity.image}`}
             alt={`${entity.authorId}`}
@@ -61,6 +58,7 @@ const ModifyScreen = ({
               results={pricesData ?? []}
               authorId={authorId}
               postId={entity.id}
+              refreshPrices={pricesQuery.refetch}
             />
           }
         />
