@@ -14,6 +14,7 @@ const HomePage: NextPage = () => {
           name="description"
           content="home page to all the stock items on the website"
         />
+        <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <Header />
       <HomeScreen />
@@ -32,7 +33,7 @@ export async function getServerSideProps(context: any) {
   if (!session) {
     return {
       redirect: {
-        destination: "/",
+        destination: "/login",
         permanent: false,
       },
     };

@@ -1,7 +1,7 @@
 import { Post } from "@prisma/client";
 import { useRouter } from "next/router";
 import { capitalizeFirstLetter } from "../../../utils/useCapitalizeFirstLetter";
-import { Button, ButtonVariant } from "../../common/Button/Button";
+import { Button, Variant } from "../../common/Button/Button";
 import { Card } from "../../common/Card";
 
 const ItemScreen = ({ post }: { post: Post }) => {
@@ -24,7 +24,7 @@ const ItemScreen = ({ post }: { post: Post }) => {
         <div className="relative mt-16">
           <Button
             className="absolute bottom-0 right-24 border border-b-0 border-r-0 border-l-0 border-gray-300 dark:border-white/20"
-            variant={ButtonVariant.Secondary}
+            variant={Variant.Secondary}
             onClick={handleReturnButton}
           >
             Volver
