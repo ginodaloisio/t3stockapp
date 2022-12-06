@@ -10,24 +10,28 @@ export const PriceHistoryScreen = ({
   results,
   authorId,
   postId,
+  refreshPrices,
 }: {
   results: Prices[];
   authorId: string;
   postId: string;
+  refreshPrices: Function;
 }) => {
-  const { isLoading, showError, handleAddPriceComplete } = useAddPrice();
+  const { isLoading, showError, handleAddPriceComplete } = useAddPrice({
+    refreshPrices,
+  });
   return (
-    <div className="flex flex-col gap-4">
+    <div className="max-w-sm cursor-default rounded sm:max-w-lg">
       <div className="flex items-center gap-8">
         <h3 className="text-2xl text-white">Precios del articulo</h3>
       </div>
-      <div className="overflow-x-auto">
+      <div className="mb-8 overflow-x-auto">
         <Table
           headers={["Precio", "Fecha", "ID"]}
           rows={results.map((result) => [
             <>${result.price}</>,
             <>{moment(result.createdAt).format("ddd D, MMM YYYY, h:mma")}</>,
-            <>{result.id}</>,
+            <p className="">{result.id}</p>,
           ])}
         />
       </div>

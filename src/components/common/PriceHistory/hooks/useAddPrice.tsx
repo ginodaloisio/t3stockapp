@@ -1,10 +1,12 @@
-import { useRouter } from "next/router";
 import { trpc } from "../../../../utils/trpc";
 import { AddPriceForm } from "../AddPriceForm";
 
-export const useAddPrice = () => {
-  const router = useRouter();
-  const addPriceMutation = trpc.useMutation("price.addPrice");
+export const useAddPrice = ({ refreshPrices }: { refreshPrices: Function }) => {
+  const addPriceMutation = trpc.useMutation("price.addPrice", {
+    onSuccess: () => {
+      refreshPrices();
+    },
+  });
   const isLoading = addPriceMutation.isLoading;
   const showError = addPriceMutation.isError;
   const handleAddPriceComplete = async (addPriceData: AddPriceForm) => {
