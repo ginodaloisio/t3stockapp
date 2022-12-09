@@ -23,7 +23,9 @@ export const Card = ({
         width={700}
         objectFit="cover"
         src={imageUrl}
-        alt="profile picture"
+        placeholder="blur"
+        blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0trSsBwACcgEmfgPGBAAAAABJRU5ErkJggg==`}
+        alt="picture"
       />
       <section className="px-4">
         <TitleAs className="mb-2 text-xl font-bold text-gray-700 dark:text-gray-100">
