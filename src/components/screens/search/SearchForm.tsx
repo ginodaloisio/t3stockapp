@@ -6,10 +6,12 @@ export type SearchForm = {
 };
 
 export const SearchForm = ({
+  isResponseEmpty,
   onComplete,
   isLoading,
   showError,
 }: {
+  isResponseEmpty: boolean;
   onComplete: (formData: SearchForm) => void;
   isLoading: boolean;
   showError: boolean;
@@ -53,6 +55,13 @@ export const SearchForm = ({
           </label>
         )}
       </div>
+      {isResponseEmpty ? (
+        <label className="label">
+          <span className="label-text-alt text-sm text-red-500">
+            No se encontro ningun articulo con ese criterio de busqueda!
+          </span>
+        </label>
+      ) : null}
       <Button type="submit" variant={Variant.Primary} isLoading={isLoading}>
         Buscar
       </Button>
