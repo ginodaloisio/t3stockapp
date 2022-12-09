@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { ContentLayout } from "../../components/common/Layouts/ContentLayout";
 import ItemScreen from "../../components/screens/item/ItemScreen";
 import { trpc } from "../../utils/trpc";
@@ -8,7 +9,10 @@ import { trpc } from "../../utils/trpc";
 const PostPage: NextPage = () => {
   const router = useRouter();
   const { id } = router.query;
-  const stockItem = trpc.useQuery(["stock.getItem", { id: String(id) || "1" }]);
+  useEffect(() => {
+    if (!id) router.push("/");
+  }, []);
+  const stockItem = trpc.useQuery(["stock.getItem", { id: String(id) }]);
   const result = stockItem.data;
 
   return (
