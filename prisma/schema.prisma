@@ -48,6 +48,7 @@ model User {
     sessions      Session[]
     posts         Post[]
     prices        Prices[]
+    Images        Images[]
 }
 
 model VerificationToken {
@@ -70,17 +71,28 @@ model Post {
     height    Int?
     width     Int?
     length_   Int?
-    image     String    @default("https://i.imgur.com/5eOffBc.jpeg")
     amount    Int       @default(1)
     published Boolean   @default(true)
     viewCount Int       @default(0)
     author    User?     @relation(fields: [authorId], references: [id])
     authorId  String?
+    images    Images[]
 }
 
 model Prices {
     id        String   @id @default(cuid())
     price     Int
+    createdAt DateTime @default(now())
+    author    User     @relation(fields: [authorId], references: [id])
+    authorId  String
+    post      Post     @relation(fields: [postId], references: [id])
+    postId    String
+}
+
+model Images {
+    id        String   @id @default(cuid())
+    title     String?
+    url       String
     createdAt DateTime @default(now())
     author    User     @relation(fields: [authorId], references: [id])
     authorId  String

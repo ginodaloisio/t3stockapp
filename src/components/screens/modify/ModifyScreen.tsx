@@ -6,9 +6,11 @@ import { trpc } from "../../../utils/trpc";
 import { EmptyStateWrapper } from "../../common/EmptyStateWrapper";
 import { EmptyStatePriceHistory } from "../../common/PriceHistory/EmptyStatePriceHistory";
 import { PriceHistoryScreen } from "../../common/PriceHistory/PriceHistoryScreen";
+import ModifyImages from "./components/ModifyImages";
 import { useEditItem } from "./hooks/useEditItem";
-import { ModifyForm } from "./ModifyForm";
-import { tabAtom, TabName, TopNavigation } from "./ModifyTabs";
+import { ModifyForm } from "./components/ModifyForm";
+import { tabAtom, TabName, TopNavigation } from "./components/ModifyTabs";
+import { EmptyStateModifyImages } from "./components/EmptyStateModifyImages";
 
 //FIXME: el select en smaller devices se ve mal
 const ModifyScreen = ({
@@ -20,8 +22,12 @@ const ModifyScreen = ({
 }) => {
   const [selectedTab] = useAtom(tabAtom);
   const pricesQuery = trpc.useQuery(["price.getPrices", { id: entity.id }]);
+  const postImagesQuery = trpc.useQuery(["image.getImages", { id: entity.id }]);
   const isLoadingPrices = pricesQuery.isLoading;
+  const isLoadingImages = postImagesQuery.isLoading;
+  const imagesData = postImagesQuery.data;
   const pricesData = pricesQuery.data;
+  const postId = entity.id;
   const { isLoading, showError, handleEditItemComplete } = useEditItem({
     id: entity.id,
   });
@@ -37,27 +43,42 @@ const ModifyScreen = ({
         />
       )}
       {selectedTab === TabName.Imagenes && (
-        <div className="mx-auto max-w-2xl px-6 pb-10 sm:px-8">
-          <Image
-            src={`${entity.image}`}
-            alt={`${entity.authorId}`}
-            placeholder="blur"
-            blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0trSsBwACcgEmfgPGBAAAAABJRU5ErkJggg==`}
-            width={1920}
-            height={1080}
-          />
-        </div>
+        <EmptyStateWrapper
+          isLoading={isLoadingImages}
+          data={imagesData}
+          EmptyComponent={
+            <EmptyStateModifyImages
+              refreshImages={postImagesQuery.refetch}
+              authorId={authorId}
+              postId={postId}
+            />
+          }
+          NonEmptyComponent={
+            <ModifyImages
+              images={imagesData ?? []}
+              authorId={authorId}
+              postId={postId}
+              refreshImages={postImagesQuery.refetch}
+            />
+          }
+        />
       )}
       {selectedTab === TabName.Precio && (
         <EmptyStateWrapper
           isLoading={isLoadingPrices}
           data={pricesData}
-          EmptyComponent={<EmptyStatePriceHistory />}
+          EmptyComponent={
+            <EmptyStatePriceHistory
+              refreshPrices={pricesQuery.refetch}
+              authorId={authorId}
+              postId={postId}
+            />
+          }
           NonEmptyComponent={
             <PriceHistoryScreen
               results={pricesData ?? []}
               authorId={authorId}
-              postId={entity.id}
+              postId={postId}
               refreshPrices={pricesQuery.refetch}
             />
           }

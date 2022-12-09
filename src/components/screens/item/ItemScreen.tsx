@@ -1,11 +1,12 @@
-import { Post } from "@prisma/client";
+import { Images, Post } from "@prisma/client";
 import { useRouter } from "next/router";
 import { capitalizeFirstLetter } from "../../../utils/useCapitalizeFirstLetter";
 import { Button, Variant } from "../../common/Button/Button";
 import { Card } from "../../common/Card";
 
-const ItemScreen = ({ post }: { post: Post }) => {
+const ItemScreen = ({ post }: { post: Post & { images: Images[] } }) => {
   const router = useRouter();
+  const imageURL = post?.images[0]?.url;
   const handleEditButton = () => {
     router.push(`/modify?id=${post.id}`);
   };
@@ -14,7 +15,11 @@ const ItemScreen = ({ post }: { post: Post }) => {
   };
   return (
     <>
-      <Card title={post.title} body={post.content} imageUrl={post.image}>
+      <Card
+        title={post.title}
+        body={post.content}
+        imageUrl={imageURL ?? "https://i.imgur.com/TRWWZzp.jpeg"}
+      >
         {capitalizeFirstLetter(post.brand.toLowerCase())}
         <br />
         {post.type}

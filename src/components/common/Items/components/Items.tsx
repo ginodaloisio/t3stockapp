@@ -2,16 +2,20 @@ import {
   ArrowsPointingOutIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
-import { Post } from "@prisma/client";
+import { Images, Post } from "@prisma/client";
+// import { Post } from "@prisma/client";
+
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
+// import { Post } from "../../../../../prisma/prismaTypes";
 import { ItemInfoModal } from "./ItemInfoModal";
 
 // TODO: refactor price display from price history
-const Items = ({ result }: { result: Post }) => {
+const Items = ({ result }: { result: Post & { images: Images[] } }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+  const imageURL = result?.images[0]?.url;
   const handleClick = () => {
     setIsModalOpen(true);
   };
@@ -34,7 +38,7 @@ const Items = ({ result }: { result: Post }) => {
       >
         <Image
           layout="responsive"
-          src={`${result.image}`}
+          src={`${imageURL ?? "https://i.imgur.com/TRWWZzp.jpeg"}`}
           alt={`${result.authorId}`}
           placeholder="blur"
           blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0trSsBwACcgEmfgPGBAAAAABJRU5ErkJggg==`}

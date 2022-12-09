@@ -1,4 +1,4 @@
-import { Post } from "@prisma/client";
+import { Images, Post } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 import { Button, Variant } from "../../Button/Button";
@@ -13,7 +13,7 @@ export const ItemInfoModal = ({
   onCancel: () => void;
   onComplete: (id: string) => void;
   isOpen: boolean;
-  item: Post;
+  item: Post & { images: Images[] };
 }) => {
   const onConfirm = () => {
     onComplete(item.id);
@@ -21,7 +21,7 @@ export const ItemInfoModal = ({
   const handleCancel = () => {
     onCancel();
   };
-
+  const imageURL = item?.images[0]?.url;
   return (
     <Modal
       title={item.title}
@@ -31,7 +31,7 @@ export const ItemInfoModal = ({
     >
       <Image
         layout="responsive"
-        src={`${item.image}`}
+        src={`${imageURL ?? "https://i.imgur.com/TRWWZzp.jpeg"}`}
         alt={`${item.authorId}`}
         placeholder="blur"
         blurDataURL={`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mM0trSsBwACcgEmfgPGBAAAAABJRU5ErkJggg==`}
