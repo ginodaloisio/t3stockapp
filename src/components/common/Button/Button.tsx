@@ -31,9 +31,9 @@ const Button = React.forwardRef(
       [Variant.Primary]:
         "border border-indigo-500 bg-indigo-500 text-white rounded px-4 py-2 hover:bg-indigo-600",
       [Variant.Secondary]:
-        "border border-gray-500 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-400",
+        "border border-gray-500 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600",
       [Variant.Danger]:
-        "border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-400",
+        "border border-red-500 bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600",
     };
     const As = as;
     return (
