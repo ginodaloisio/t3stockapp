@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Brands } from "../../../../prisma/prismaEnums";
+import { Brands } from "../../../../prisma/prismaTypes";
 import { capitalizeFirstLetter } from "../../../utils/useCapitalizeFirstLetter";
 import { Button, Variant } from "../../common/Button/Button";
 
@@ -211,7 +211,7 @@ export const AddForm = ({
         <input
           type="text"
           id="imageURL"
-          placeholder="ej: imgur.com/dadasd"
+          placeholder="ej: https://i.imgur.com/BlIgFZt.jpeg"
           className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
           {...register("imageURL", { required: true })}
         />
