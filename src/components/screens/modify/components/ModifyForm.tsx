@@ -1,8 +1,8 @@
 import React from "react";
 import { Brands, Post } from "@prisma/client";
 import { useForm } from "react-hook-form";
-import { Button, Variant } from "../../common/Button/Button";
-import { capitalizeFirstLetter } from "../../../utils/useCapitalizeFirstLetter";
+import { Button, Variant } from "../../../common/Button/Button";
+import { capitalizeFirstLetter } from "../../../../utils/useCapitalizeFirstLetter";
 import { useRouter } from "next/router";
 
 export type UpdateForm = {
@@ -13,7 +13,6 @@ export type UpdateForm = {
   height: number | null;
   length_: number | null;
   width: number | null;
-  image: string;
   authorEmail: string;
 };
 
@@ -45,10 +44,7 @@ export const ModifyForm = ({
 
   return (
     <>
-      <form
-        className="form-control flex w-2/3 flex-col sm:w-1/3"
-        onSubmit={onSubmit}
-      >
+      <form className="flex w-2/3 flex-col sm:w-1/3" onSubmit={onSubmit}>
         {showError && (
           <label className="label">
             <span className="label-text-alt text-sm text-red-500">
@@ -177,7 +173,7 @@ export const ModifyForm = ({
             />
           </div>
         </div>
-        <div>
+        {/* <div>
           <label
             htmlFor="image"
             className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
@@ -198,7 +194,7 @@ export const ModifyForm = ({
               </span>
             </label>
           )}
-        </div>
+        </div> */}
         <Button
           className="mt-6"
           type="submit"

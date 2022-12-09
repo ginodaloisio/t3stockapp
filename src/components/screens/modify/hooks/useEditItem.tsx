@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { trpc } from "../../../../utils/trpc";
-import { UpdateForm } from "../ModifyForm";
+import { UpdateForm } from "../components/ModifyForm";
 
 export const useEditItem = ({ id }: { id: string }) => {
   const router = useRouter();
