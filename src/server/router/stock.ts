@@ -1,20 +1,8 @@
-import { createRouter } from "./context";
+import { createProtectedRouter } from "./context";
 import { z } from "zod";
-import { TRPCError } from "@trpc/server";
-import { Brands } from "../../../prisma/prismaEnums";
+import { Brands } from "../../../prisma/prismaTypes";
 
-export const stockRouter = createRouter()
-  .middleware(async ({ ctx, next }) => {
-    if (!ctx.session) {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
-    }
-    return next({
-      ctx: {
-        ...ctx,
-        session: ctx.session,
-      },
-    });
-  })
+export const stockRouter = createProtectedRouter()
   .query("getItems", {
     input: z.object({
       limit: z.number().min(1).max(100).nullish(),
@@ -26,6 +14,14 @@ export const stockRouter = createRouter()
       const posts = await ctx.prisma.post.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
+        include: {
+          images: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 1,
+          },
+        },
       });
       let nextCursor: typeof cursor | undefined = undefined;
       if (posts.length > limit) {
@@ -47,14 +43,20 @@ export const stockRouter = createRouter()
         where: {
           id: input.id,
         },
-        // include: {
-        //   prices: {
-        //     orderBy: {
-        //       createdAt: "desc",
-        //     },
-        //     take: 1,
-        //   },
-        // },
+        include: {
+          images: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 1,
+          },
+          // prices: {
+          //   orderBy: {
+          //     createdAt: "desc",
+          //   },
+          //   take: 1,
+          // },
+        },
       });
       return result;
     },
@@ -83,6 +85,14 @@ export const stockRouter = createRouter()
             },
           ],
         },
+        include: {
+          images: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 1,
+          },
+        },
       });
       return results;
     },
@@ -110,7 +120,6 @@ export const stockRouter = createRouter()
           height: input?.height,
           length_: input?.length_,
           width: input?.width,
-          image: input.imageURL,
           prices: {
             create: {
               price: input.price,
@@ -120,7 +129,19 @@ export const stockRouter = createRouter()
           author: { connect: { id: input.authorId } },
         },
       });
-      return item.id;
+      const image = await ctx.prisma.images.create({
+        data: {
+          url: input.imageURL,
+          authorId: input.authorId,
+          postId: item.id,
+        },
+      });
+      const itemId = item.id;
+      const imageId = image.id;
+      return {
+        itemId,
+        imageId,
+      };
     },
   })
   .mutation("editItem", {
@@ -133,7 +154,6 @@ export const stockRouter = createRouter()
       height: z.number().nullish(),
       length_: z.number().nullish(),
       width: z.number().nullish(),
-      image: z.string(),
     }),
     async resolve({ input, ctx }) {
       const updatedItem = await ctx.prisma.post.update({
@@ -148,7 +168,6 @@ export const stockRouter = createRouter()
           height: input.height != null ? input.height : undefined,
           length_: input.length_ != null ? input.length_ : undefined,
           width: input.width != null ? input.width : undefined,
-          image: input.image,
         },
       });
       return updatedItem.id;

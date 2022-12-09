@@ -5,8 +5,8 @@ import { AddForm } from "../AddForm";
 export const useAddItem = () => {
   const router = useRouter();
   const addItemMutation = trpc.useMutation("stock.addItem", {
-    onSuccess: (id) => {
-      router.push(`/item/${id}`);
+    onSuccess: (data) => {
+      router.push(`/item/${data.itemId}`);
     },
   });
 
