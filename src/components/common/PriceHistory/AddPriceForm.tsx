@@ -45,6 +45,12 @@ export const AddPriceForm = ({
           </label>
         )}
         <div>
+          <label
+            htmlFor="price"
+            className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
+          >
+            Agregar precio
+          </label>
           <input
             type="number"
             id="price"
