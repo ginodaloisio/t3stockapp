@@ -25,7 +25,7 @@ export const createContextInner = async (opts: CreateContextOptions) => {
  * @link https://trpc.io/docs/context
  **/
 export const createContext = async (
-  opts: trpcNext.CreateNextContextOptions,
+  opts: trpcNext.CreateNextContextOptions
 ) => {
   const { req, res } = opts;
 
@@ -46,14 +46,13 @@ export const createRouter = () => trpc.router<Context>();
  **/
 export function createProtectedRouter() {
   return createRouter().middleware(({ ctx, next }) => {
-    if (!ctx.session || !ctx.session.user) {
+    if (!ctx.session) {
       throw new trpc.TRPCError({ code: "UNAUTHORIZED" });
     }
     return next({
       ctx: {
         ...ctx,
-        // infers that `session` is non-nullable to downstream resolvers
-        session: { ...ctx.session, user: ctx.session.user },
+        session: ctx.session,
       },
     });
   });

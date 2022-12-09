@@ -1,19 +1,7 @@
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { createRouter } from "./context";
+import { createProtectedRouter } from "./context";
 
-export const priceRouter = createRouter()
-  .middleware(async ({ ctx, next }) => {
-    if (!ctx.session) {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
-    }
-    return next({
-      ctx: {
-        ...ctx,
-        session: ctx.session,
-      },
-    });
-  })
+export const priceRouter = createProtectedRouter()
   .query("getPrices", {
     input: z.object({
       id: z.string(),
