@@ -22,9 +22,9 @@ export const PriceHistoryScreen = ({
   });
   return (
     <div className="max-w-sm cursor-default rounded sm:max-w-lg">
-      <div className="flex items-center gap-8">
-        <h3 className="text-2xl text-white">Precios del articulo</h3>
-      </div>
+      <h3 className="mb-4 text-center text-2xl text-white">
+        Precios del articulo
+      </h3>
       <div className="mb-8 overflow-x-auto">
         <Table
           headers={["Precio", "Fecha", "ID"]}

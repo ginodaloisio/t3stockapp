@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { Button, ButtonVariant } from "../../common/Button/Button";
+import { Button, Variant } from "../../common/Button/Button";
 
 export const EmptyStateHomeScreen = () => {
   return (
@@ -14,9 +14,7 @@ export const EmptyStateHomeScreen = () => {
       /> */}
       <div className="text-2xl">No hay items todavia!</div>
       <Link href="/add" passHref>
-        <Button as="a" variant={ButtonVariant.Primary}>
-          Agregar items
-        </Button>
+        <Button variant={Variant.Primary}>Agregar items</Button>
       </Link>
     </div>
   );

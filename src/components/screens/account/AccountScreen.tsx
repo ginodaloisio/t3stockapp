@@ -1,5 +1,6 @@
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/outline";
 import moment from "moment";
+import "moment/locale/es";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
@@ -7,6 +8,7 @@ import { useState } from "react";
 import { SignOutModal } from "./SignOutModal";
 
 const AccountScreen = ({ userData }: { userData: Session }) => {
+  moment.locale("es");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
     setIsModalOpen(true);
@@ -36,14 +38,14 @@ const AccountScreen = ({ userData }: { userData: Session }) => {
           <label className="text-sm text-gray-500 dark:text-gray-500 md:text-lg">
             Nombre de usuario
           </label>
-          <span className="mb-2 cursor-pointer text-lg font-bold text-gray-700 dark:text-gray-100">
+          <span className="mb-2 text-lg text-gray-700 dark:text-gray-100">
             {userName}
           </span>
           <label className="text-sm text-gray-500 dark:text-gray-500 md:text-lg">
             Email
           </label>
 
-          <span className="mb-2 cursor-pointer text-lg font-bold text-gray-700 dark:text-gray-100">
+          <span className="mb-2 text-lg text-gray-700 dark:text-gray-100">
             {userEmail}
           </span>
         </section>

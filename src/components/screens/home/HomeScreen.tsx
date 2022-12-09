@@ -7,7 +7,6 @@ import { ContentLayout } from "../../common/Layouts/ContentLayout";
 import { ThreeDots } from "react-loader-spinner";
 import React from "react";
 export const HomeScreen = () => {
-  // const stockItemsQuery = trpc.useQuery(["stock.getItems", { cursor: "1" }]);
   const stockItemsInfiniteQuery = trpc.useInfiniteQuery(
     ["stock.getItems", { limit: 6 }],
     { getNextPageParam: (lastPage) => lastPage.nextCursor }
