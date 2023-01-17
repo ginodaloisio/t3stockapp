@@ -173,28 +173,6 @@ export const ModifyForm = ({
             />
           </div>
         </div>
-        {/* <div>
-          <label
-            htmlFor="image"
-            className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
-          >
-            Url de la imagen
-          </label>
-          <input
-            type="text"
-            id="image"
-            placeholder="ej: imgur.com/dadasd"
-            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md dark:bg-gray-800 dark:text-gray-300"
-            {...register("image", { required: true })}
-          />
-          {errors.image && (
-            <label className="label">
-              <span className="label-text-alt text-sm text-red-500">
-                Este campo es obligatorio!
-              </span>
-            </label>
-          )}
-        </div> */}
         <Button
           className="mt-6"
           type="submit"

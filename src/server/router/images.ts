@@ -1,25 +1,31 @@
 import { z } from "zod";
-import { createProtectedRouter } from "./context";
+import { procedure, router } from "./context";
+import { isAuthorized } from "./user";
 
-export const imageRouter = createProtectedRouter()
-  .query("getImages", {
-    input: z.object({
-      id: z.string(),
-    }),
-    async resolve({ input, ctx }) {
+export const imageRouter = router({
+  getImages: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
       return await ctx.prisma.images.findMany({
         where: { postId: input.id },
         orderBy: {
           createdAt: "desc",
         },
       });
-    },
-  })
-  .query("getImage", {
-    input: z.object({
-      id: z.string(),
     }),
-    async resolve({ input, ctx }) {
+  getImage: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
       return await ctx.prisma.images.findMany({
         where: {
           postId: input.id,
@@ -29,15 +35,17 @@ export const imageRouter = createProtectedRouter()
         },
         take: 1,
       });
-    },
-  })
-  .mutation("addImage", {
-    input: z.object({
-      url: z.string(),
-      authorId: z.string(),
-      postId: z.string(),
     }),
-    async resolve({ input, ctx }) {
+  addImage: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        url: z.string(),
+        authorId: z.string(),
+        postId: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
       const image = await ctx.prisma.images.create({
         data: {
           url: input.url,
@@ -46,5 +54,19 @@ export const imageRouter = createProtectedRouter()
         },
       });
       return image.id;
-    },
-  });
+    }),
+  deleteImage: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      await ctx.prisma.images.delete({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
+});

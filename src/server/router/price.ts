@@ -1,51 +1,61 @@
 import { z } from "zod";
-import { createProtectedRouter } from "./context";
+import { procedure, router } from "./context";
+import { isAuthorized } from "./user";
 
-export const priceRouter = createProtectedRouter()
-  .query("getPrices", {
-    input: z.object({
-      id: z.string(),
-    }),
-    async resolve({ input, ctx }) {
+export const priceRouter = router({
+  getPrices: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
       return await ctx.prisma.prices.findMany({
-        where: { postId: input.id },
+        where: {
+          postId: input.id,
+        },
         take: 5,
         orderBy: {
           createdAt: "desc",
         },
       });
-    },
-  })
-  .query("getPrice", {
-    input: z.object({
-      id: z.string(),
     }),
-    async resolve({ input, ctx }) {
+  getPrice: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
       return await ctx.prisma.prices.findMany({
         where: {
           postId: input.id,
         },
+        take: 1,
         orderBy: {
           createdAt: "desc",
         },
-        take: 1,
       });
-    },
-  })
-  .mutation("addPrice", {
-    input: z.object({
-      price: z.number(),
-      authorId: z.string(),
-      postId: z.string(),
     }),
-    async resolve({ input, ctx }) {
-      const price = await ctx.prisma.prices.create({
+  addPrice: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        price: z.number(),
+        authorId: z.string(),
+        postId: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const newPrice = await ctx.prisma.prices.create({
         data: {
           price: input.price,
           authorId: input.authorId,
           postId: input.postId,
         },
       });
-      return price.id;
-    },
-  });
+      return newPrice.id;
+    }),
+});

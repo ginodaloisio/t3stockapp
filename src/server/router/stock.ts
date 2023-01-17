@@ -1,17 +1,22 @@
-import { createProtectedRouter } from "./context";
+// import { createProtectedRouter } from "./context";
 import { z } from "zod";
 import { Brands } from "../../../prisma/prismaTypes";
+import { procedure, router } from "./context";
+import { isAuthorized } from "./user";
 
-export const stockRouter = createProtectedRouter()
-  .query("getItems", {
-    input: z.object({
-      limit: z.number().min(1).max(100).nullish(),
-      cursor: z.string().nullish(),
-    }),
-    async resolve({ ctx, input }) {
+export const stockRouter = router({
+  getItems: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
       const limit = input.limit ?? 10;
       const { cursor } = input;
-      const posts = await ctx.prisma.post.findMany({
+      const stockItems = await ctx.prisma.post.findMany({
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         include: {
@@ -24,22 +29,24 @@ export const stockRouter = createProtectedRouter()
         },
       });
       let nextCursor: typeof cursor | undefined = undefined;
-      if (posts.length > limit) {
-        const nextItem = posts.pop();
-        nextCursor = nextItem!.id;
+      if (stockItems.length > limit) {
+        const nextItem = stockItems.pop();
+        nextCursor = nextItem?.id;
       }
       return {
-        posts,
+        stockItems,
         nextCursor,
       };
-    },
-  })
-  .query("getItem", {
-    input: z.object({
-      id: z.string(),
     }),
-    async resolve({ input, ctx }) {
-      const result = await ctx.prisma.post.findUnique({
+  getItem: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      return await ctx.prisma.post.findUnique({
         where: {
           id: input.id,
         },
@@ -50,23 +57,24 @@ export const stockRouter = createProtectedRouter()
             },
             take: 1,
           },
-          // prices: {
-          //   orderBy: {
-          //     createdAt: "desc",
-          //   },
-          //   take: 1,
-          // },
+          prices: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 1,
+          },
         },
       });
-      return result;
-    },
-  })
-  .query("searchItems", {
-    input: z.object({
-      searchString: z.string(),
     }),
-    async resolve({ input, ctx }) {
-      const results = await ctx.prisma.post.findMany({
+  searchItems: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        searchString: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      return await ctx.prisma.post.findMany({
         where: {
           OR: [
             {
@@ -92,26 +100,33 @@ export const stockRouter = createProtectedRouter()
             },
             take: 1,
           },
+          prices: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 1,
+          },
         },
       });
-      return results;
-    },
-  })
-  .mutation("addItem", {
-    input: z.object({
-      title: z.string(),
-      content: z.string(),
-      price: z.number(),
-      type: z.string().nullish(),
-      brand: z.nativeEnum(Brands),
-      height: z.number().nullish(),
-      length_: z.number().nullish(),
-      width: z.number().nullish(),
-      imageURL: z.string(),
-      authorId: z.string(),
     }),
-    async resolve({ input, ctx }) {
-      const item = await ctx.prisma.post.create({
+  addItem: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        title: z.string(),
+        content: z.string(),
+        price: z.number(),
+        type: z.string().nullish(),
+        brand: z.nativeEnum(Brands),
+        height: z.number().nullish(),
+        length_: z.number().nullish(),
+        width: z.number().nullish(),
+        imageURL: z.string(),
+        authorId: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      return await ctx.prisma.post.create({
         data: {
           title: input.title,
           content: input.content,
@@ -127,35 +142,32 @@ export const stockRouter = createProtectedRouter()
             },
           },
           author: { connect: { id: input.authorId } },
+          images: {
+            create: [
+              {
+                url: input.imageURL,
+                authorId: input.authorId,
+              },
+            ],
+          },
         },
       });
-      const image = await ctx.prisma.images.create({
-        data: {
-          url: input.imageURL,
-          authorId: input.authorId,
-          postId: item.id,
-        },
-      });
-      const itemId = item.id;
-      const imageId = image.id;
-      return {
-        itemId,
-        imageId,
-      };
-    },
-  })
-  .mutation("editItem", {
-    input: z.object({
-      id: z.string(),
-      title: z.string(),
-      content: z.string(),
-      type: z.string().nullish(),
-      brand: z.nativeEnum(Brands),
-      height: z.number().nullish(),
-      length_: z.number().nullish(),
-      width: z.number().nullish(),
     }),
-    async resolve({ input, ctx }) {
+  editItem: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+        content: z.string(),
+        type: z.string().nullable(),
+        brand: z.nativeEnum(Brands),
+        height: z.number().nullable(),
+        length_: z.number().nullable(),
+        width: z.number().nullable(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
       const updatedItem = await ctx.prisma.post.update({
         where: {
           id: input.id,
@@ -163,13 +175,13 @@ export const stockRouter = createProtectedRouter()
         data: {
           title: input.title,
           content: input.content,
-          type: input.type != null ? input.type : undefined,
+          type: input.type,
           brand: input.brand,
-          height: input.height != null ? input.height : undefined,
-          length_: input.length_ != null ? input.length_ : undefined,
-          width: input.width != null ? input.width : undefined,
+          height: input.height,
+          length_: input.length_,
+          width: input.width,
         },
       });
       return updatedItem.id;
-    },
-  });
+    }),
+});

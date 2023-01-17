@@ -12,7 +12,6 @@ import { ModifyForm } from "./components/ModifyForm";
 import { tabAtom, TabName, TopNavigation } from "./components/ModifyTabs";
 import { EmptyStateModifyImages } from "./components/EmptyStateModifyImages";
 
-//FIXME: el select en smaller devices se ve mal
 const ModifyScreen = ({
   entity,
   authorId,

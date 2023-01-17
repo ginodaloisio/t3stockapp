@@ -1,15 +1,32 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { createProtectedRouter } from "./context";
+import { middleware, procedure, router } from "./context";
 
-export const userRouter = createProtectedRouter().query("getUser", {
-  input: z.object({
-    id: z.string(),
-  }),
-  async resolve({ input, ctx }) {
-    return await ctx.prisma.user.findUnique({
-      where: {
-        id: input.id,
-      },
-    });
-  },
+export const isAuthorized = middleware(async ({ ctx, next }) => {
+  if (!ctx.session) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next({
+    ctx: {
+      ...ctx,
+      session: ctx.session,
+    },
+  });
+});
+
+export const userRouter = router({
+  getUser: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      return await ctx.prisma.user.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+    }),
 });

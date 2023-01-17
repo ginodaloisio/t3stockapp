@@ -7,8 +7,8 @@ export const useAddImage = ({ refreshImages }: { refreshImages: Function }) => {
       refreshImages();
     },
   });
-  const isLoading = addImageMutation.isLoading;
-  const showError = addImageMutation.isError;
+  const isImageLoading = addImageMutation.isLoading;
+  const showImageError = addImageMutation.isError;
   const handleAddImageComplete = async (addImageData: ImagesTypeForm) => {
     await addImageMutation.mutateAsync({
       ...addImageData,
@@ -16,8 +16,8 @@ export const useAddImage = ({ refreshImages }: { refreshImages: Function }) => {
   };
 
   return {
-    isLoading,
-    showError,
+    isImageLoading,
+    showImageError,
     handleAddImageComplete,
   };
 };
