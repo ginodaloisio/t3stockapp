@@ -5,7 +5,7 @@ export const useDeleteImage = ({
 }: {
   refreshImages: Function;
 }) => {
-  const deleteImageMutation = trpc.useMutation("image.deleteImage", {
+  const deleteImageMutation = trpc.image.deleteImage.useMutation({
     onSuccess: () => {
       refreshImages();
     },

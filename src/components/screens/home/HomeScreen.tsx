@@ -7,9 +7,17 @@ import { ContentLayout } from "../../common/Layouts/ContentLayout";
 import { ThreeDots } from "react-loader-spinner";
 import React from "react";
 export const HomeScreen = () => {
-  const stockItemsInfiniteQuery = trpc.useInfiniteQuery(
-    ["stock.getItems", { limit: 6 }],
-    { getNextPageParam: (lastPage) => lastPage.nextCursor }
+  // const stockItemsInfiniteQuery = trpc.useInfiniteQuery(
+  //   ["stock.getItems", { limit: 6 }],
+  //   { getNextPageParam: (lastPage) => lastPage.nextCursor }
+  // );
+  const stockItemsInfiniteQuery = trpc.stock.getItems.useInfiniteQuery(
+    {
+      limit: 6,
+    },
+    {
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+    }
   );
   const {
     data: results,
@@ -42,7 +50,7 @@ export const HomeScreen = () => {
         >
           {results?.pages.map((i) => (
             <React.Fragment key={i.nextCursor ?? "lastPage"}>
-              <ItemRender results={i.posts ?? []} />
+              <ItemRender results={i.stockItems ?? []} />
             </React.Fragment>
           ))}
         </InfiniteScroll>
