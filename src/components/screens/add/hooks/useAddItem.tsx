@@ -4,12 +4,11 @@ import { AddForm } from "../AddForm";
 
 export const useAddItem = () => {
   const router = useRouter();
-  const addItemMutation = trpc.useMutation("stock.addItem", {
-    onSuccess: (data) => {
-      router.push(`/item/${data.itemId}`);
+  const addItemMutation = trpc.stock.addItem.useMutation({
+    onSuccess(data) {
+      router.push(`/item/${data.id}`);
     },
   });
-
   const isLoading = addItemMutation.isLoading;
   const showError = addItemMutation.isError;
   const handleAddItemComplete = async (addItemData: AddForm) => {

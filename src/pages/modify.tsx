@@ -12,7 +12,7 @@ function ModifyPage() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const { id } = router.query;
-  const stockItem = trpc.useQuery(["stock.getItem", { id: String(id) }]);
+  const stockItem = trpc.stock.getItem.useQuery({ id: String(id) });
   const isNotLoading = !stockItem.isLoading;
   useEffect(() => {
     if (status === "unauthenticated") {

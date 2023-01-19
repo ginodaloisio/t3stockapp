@@ -4,7 +4,7 @@ import { UpdateForm } from "../components/ModifyForm";
 
 export const useEditItem = ({ id }: { id: string }) => {
   const router = useRouter();
-  const editItemMutation = trpc.useMutation("stock.editItem", {
+  const editItemMutation = trpc.stock.editItem.useMutation({
     onSuccess: (id) => {
       router.push(`/item/${id}`);
     },

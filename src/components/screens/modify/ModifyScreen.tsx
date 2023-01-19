@@ -20,8 +20,12 @@ const ModifyScreen = ({
   authorId: string;
 }) => {
   const [selectedTab] = useAtom(tabAtom);
-  const pricesQuery = trpc.useQuery(["price.getPrices", { id: entity.id }]);
-  const postImagesQuery = trpc.useQuery(["image.getImages", { id: entity.id }]);
+  const pricesQuery = trpc.price.getPrices.useQuery({
+    id: entity.id,
+  });
+  const postImagesQuery = trpc.image.getImages.useQuery({
+    id: entity.id,
+  });
   const isLoadingPrices = pricesQuery.isLoading;
   const isLoadingImages = postImagesQuery.isLoading;
   const imagesData = postImagesQuery.data;

@@ -11,8 +11,10 @@ export const useSearchItem = ({
   const [results, setResults] = useState<
     (Post & { images: Images[] })[] | undefined
   >([]);
-  const query = trpc.useQuery(
-    ["stock.searchItems", { searchString: searchParams.searchString }],
+  const query = trpc.stock.searchItems.useQuery(
+    {
+      searchString: searchParams.searchString,
+    },
     {
       enabled: !!searchParams.searchString,
       onSuccess(data) {

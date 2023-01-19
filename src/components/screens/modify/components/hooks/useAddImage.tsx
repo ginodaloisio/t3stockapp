@@ -2,7 +2,7 @@ import { trpc } from "../../../../../utils/trpc";
 import { ImagesTypeForm } from "../ImagesForm";
 
 export const useAddImage = ({ refreshImages }: { refreshImages: Function }) => {
-  const addImageMutation = trpc.useMutation("image.addImage", {
+  const addImageMutation = trpc.image.addImage.useMutation({
     onSuccess: () => {
       refreshImages();
     },
