@@ -22,7 +22,7 @@ export const useSearchItem = ({
       },
     }
   );
-  const isLoading = query.isLoading;
+  const isLoading = query.isLoading && query.fetchStatus !== "idle";
   const showError = query.isError;
   const isSuccess = query.isSuccess;
   return {
