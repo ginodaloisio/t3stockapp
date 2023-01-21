@@ -2,7 +2,7 @@ import { trpc } from "../../../../utils/trpc";
 import { AddPriceForm } from "../AddPriceForm";
 
 export const useAddPrice = ({ refreshPrices }: { refreshPrices: Function }) => {
-  const addPriceMutation = trpc.useMutation("price.addPrice", {
+  const addPriceMutation = trpc.price.addPrice.useMutation({
     onSuccess: () => {
       refreshPrices();
     },

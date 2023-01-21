@@ -12,7 +12,7 @@ const PostPage: NextPage = () => {
   useEffect(() => {
     if (!id) router.push("/");
   }, []);
-  const stockItem = trpc.useQuery(["stock.getItem", { id: String(id) }]);
+  const stockItem = trpc.stock.getItem.useQuery({ id: String(id) });
   const result = stockItem.data;
 
   return (
