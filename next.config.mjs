@@ -26,6 +26,7 @@ export default defineNextConfig({
       "imgur.com",
       "avatars.githubusercontent.com",
       "githubusercontent.com",
+      "googleusercontent.com",
     ],
   },
 });
