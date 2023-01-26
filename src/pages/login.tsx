@@ -44,7 +44,7 @@ function LoginPage() {
           className="flex w-2/3 flex-col gap-4 sm:w-1/3"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="mb-5">
+          {/* <div className="mb-5">
             <label
               htmlFor="username"
               className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
@@ -81,13 +81,21 @@ function LoginPage() {
           </div>
           <Button type="submit" variant={Variant.Primary}>
             Iniciar
-          </Button>
+          </Button> */}
           <Button
             type="button"
             variant={Variant.Secondary}
             onClick={() => signIn("github", { callbackUrl: "/" })}
           >
             Iniciar con Github
+          </Button>
+
+          <Button
+            type="button"
+            variant={Variant.Secondary}
+            onClick={() => signIn("google", { callbackUrl: "/" })}
+          >
+            Iniciar con Google
           </Button>
         </form>
       </main>
