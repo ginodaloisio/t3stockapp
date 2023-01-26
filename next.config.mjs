@@ -27,6 +27,7 @@ export default defineNextConfig({
       "avatars.githubusercontent.com",
       "githubusercontent.com",
       "googleusercontent.com",
+      "lh3.googleusercontent.com",
     ],
   },
 });
