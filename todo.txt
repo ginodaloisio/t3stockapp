@@ -1,3 +1,0 @@
-TODO: price history table should be a component
-TODO: add price history to AddScreen
-TODO: add price history to ModifyScreen

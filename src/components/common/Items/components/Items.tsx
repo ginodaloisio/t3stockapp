@@ -1,18 +1,19 @@
 import {
   ArrowsPointingOutIcon,
-  ShoppingBagIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/24/outline";
-import { Images, Post } from "@prisma/client";
-// import { Post } from "@prisma/client";
-
+import { Images, Post, Prices } from "@prisma/client";
+import { isEmpty } from "lodash";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
-// import { Post } from "../../../../../prisma/prismaTypes";
 import { ItemInfoModal } from "./ItemInfoModal";
 
-// TODO: refactor price display from price history
-const Items = ({ result }: { result: Post & { images: Images[] } }) => {
+const Items = ({
+  result,
+}: {
+  result: Post & { images: Images[]; prices: Prices };
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const imageURL = result?.images[0]?.url;
@@ -25,7 +26,6 @@ const Items = ({ result }: { result: Post & { images: Images[] } }) => {
   const handleConfirmModal = (id: string) => {
     router.push(`/item/${id}`);
   };
-
   return (
     <>
       <div
@@ -56,15 +56,15 @@ const Items = ({ result }: { result: Post & { images: Images[] } }) => {
             {" "}
             {result.type && result.type} - {result.brand && result.brand}
             {"  •  "}
-            <ShoppingBagIcon className="mr-1 h-5" />
+            {/* <ShoppingBagIcon className="mr-1 h-5" /> */}
             {result.viewCount}
-            {/* {result.price && result.viewCount > 0 ? (
-            <>
-              {"  •  "}
-              <CurrencyDollarIcon className="ml-2 mr-1 h-5" />
-              {result.price && result.price + "-."}
-            </>
-          ) : null} */}
+            {!isEmpty(result.prices) ? (
+              <>
+                {"  •  "}
+                <CurrencyDollarIcon className="ml-2 mr-1 h-5" />
+                {result.prices[0].price && result.prices[0].price + "-."}
+              </>
+            ) : null}
           </p>
           <p className="flex items-center text-gray-700 opacity-0 group-hover:opacity-100 dark:text-gray-400">
             {result?.length_! | result?.width! | result?.height! ? (

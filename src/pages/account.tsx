@@ -16,7 +16,6 @@ function AccountPage() {
       void router.push("/login");
     }
   }, [status]);
-  console.log(session);
   return (
     <>
       <Head>

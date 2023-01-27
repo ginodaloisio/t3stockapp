@@ -5,6 +5,7 @@ import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
+import { AspectRatio } from "../../common/Ui/AspectRatio";
 import { SignOutModal } from "./SignOutModal";
 
 const AccountScreen = ({ userData }: { userData: Session }) => {
@@ -27,13 +28,16 @@ const AccountScreen = ({ userData }: { userData: Session }) => {
   return (
     <>
       <li className="flex max-w-sm cursor-default flex-col gap-4 overflow-hidden rounded bg-gray-300 shadow-xl dark:bg-gray-800 dark:text-gray-500">
-        <Image
-          height={700}
-          width={700}
-          className="rounded-t-md"
-          src={userImage!}
-          alt="profile picture"
-        />
+        <div className="w-auto">
+          <AspectRatio ratio={4 / 3}>
+            <Image
+              className="rounded-md object-cover"
+              src={userImage!}
+              layout="fill"
+              alt="profile picture"
+            />
+          </AspectRatio>
+        </div>
         <section className="flex flex-col px-4">
           <label className="text-sm text-gray-500 dark:text-gray-500 md:text-lg">
             Nombre de usuario

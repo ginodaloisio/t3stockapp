@@ -5,7 +5,6 @@ import { Table } from "../Table/Table";
 import { AddPriceForm } from "./AddPriceForm";
 import { useAddPrice } from "./hooks/useAddPrice";
 
-//TODO: al clickear la tabla se abra un modal que muestre informacion de quien cambio el precio y porque
 export const PriceHistoryScreen = ({
   results,
   authorId,
