@@ -26,6 +26,12 @@ export const stockRouter = router({
             },
             take: 1,
           },
+          prices: {
+            orderBy: {
+              createdAt: "desc",
+            },
+            take: 1,
+          },
         },
       });
       let nextCursor: typeof cursor | undefined = undefined;
