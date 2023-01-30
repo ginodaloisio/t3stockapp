@@ -12,7 +12,7 @@ import { ItemInfoModal } from "./ItemInfoModal";
 const Items = ({
   result,
 }: {
-  result: Post & { images: Images[]; prices: Prices };
+  result: Post & { images: Images[]; prices: Prices[] };
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
@@ -62,7 +62,7 @@ const Items = ({
               <>
                 {"  •  "}
                 <CurrencyDollarIcon className="ml-2 mr-1 h-5" />
-                {result.prices[0].price && result.prices[0].price + "-."}
+                {result?.prices[0]?.price && result.prices[0].price + "-."}
               </>
             ) : null}
           </p>
