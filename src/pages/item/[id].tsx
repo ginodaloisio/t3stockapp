@@ -23,7 +23,7 @@ const PostPage: NextPage = () => {
       </Head>
       {result && (
         <ContentLayout useContainer={true}>
-          <ItemScreen post={result} />
+          <ItemScreen item={result} />
         </ContentLayout>
       )}
     </>
