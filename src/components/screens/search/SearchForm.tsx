@@ -38,7 +38,7 @@ export const SearchForm = ({
           htmlFor="searchInput"
           className="mb-3 block text-base font-medium text-gray-700 dark:text-gray-400"
         >
-          Nombre / descripcion del articulo
+          Nombre o descripcion del articulo
         </label>
         <input
           type="text"

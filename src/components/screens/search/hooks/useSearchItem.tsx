@@ -1,5 +1,5 @@
-import { Images, Post, Prices } from "@prisma/client";
 import { useState } from "react";
+import { Post } from "../../../../../prisma/prismaTypes";
 import { trpc } from "../../../../utils/trpc";
 import { SearchForm } from "../SearchForm";
 
@@ -8,9 +8,7 @@ export const useSearchItem = ({
 }: {
   searchParams: SearchForm;
 }) => {
-  const [results, setResults] = useState<
-    (Post & { images: Images[]; prices: Prices[] })[] | undefined
-  >([]);
+  const [results, setResults] = useState<Post[] | undefined>([]);
   const query = trpc.stock.searchItems.useQuery(
     {
       searchString: searchParams.searchString,

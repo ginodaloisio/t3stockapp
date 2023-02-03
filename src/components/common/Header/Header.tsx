@@ -20,7 +20,7 @@ export const Header = () => {
         <HeaderItem title="INICIO" Icon={HomeIcon} goto="/" />
         <HeaderItem title="BUSCAR" Icon={MagnifyingGlassIcon} goto="/search" />
         <HeaderItem title="AGREGAR" Icon={PlusIcon} goto="/add" />
-        <HeaderItem title="REMOVER" Icon={MinusSmallIcon} goto="/delete" />
+        <HeaderItem title="REMOVER" Icon={MinusSmallIcon} goto="/remove" />
         <HeaderItem title="CUENTA" Icon={UserIcon} goto="/account" />
         <ThemeButton />
       </div>

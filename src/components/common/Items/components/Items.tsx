@@ -57,7 +57,7 @@ const Items = ({
             {result.type && result.type} - {result.brand && result.brand}
             {"  •  "}
             {/* <ShoppingBagIcon className="mr-1 h-5" /> */}
-            {result.viewCount}
+            {result.amount}
             {!isEmpty(result.prices) ? (
               <>
                 {"  •  "}

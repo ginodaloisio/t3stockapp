@@ -1,6 +1,6 @@
 import type { Brands as PrismaBrands } from "@prisma/client";
-import type { Post as PrismaPost } from "@prisma/client";
-
+import type { Prices as PrismaPrices } from "@prisma/client";
+import type { Images as PrismaImages } from "@prisma/client";
 //We need to map all prisma enums to objects so they can be safely imported into client side code
 // Otherwise this will break the build by importing the WHOLE Prisma client on the client side
 // see https://github.com/prisma/prisma/issues/12504
@@ -26,18 +26,11 @@ export type Post = {
   height: number | null;
   width: number | null;
   length_: number | null;
-  images: Images[];
+  images: PrismaImages[];
+  prices: PrismaPrices[];
   amount: number;
   published: boolean;
   viewCount: number;
   authorId: string | null;
 };
-
-export type Images = {
-  id: string;
-  title: string | null;
-  url: string;
-  createdAt: Date;
-  authorId: string;
-  postId: string;
-};
+//TODO: add sales to the type
