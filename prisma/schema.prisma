@@ -49,6 +49,7 @@ model User {
     posts         Post[]
     prices        Prices[]
     Images        Images[]
+    Sales         Sales[]
 }
 
 model VerificationToken {
@@ -77,6 +78,7 @@ model Post {
     author    User?     @relation(fields: [authorId], references: [id])
     authorId  String?
     images    Images[]
+    sales     Sales[]
 }
 
 model Prices {
@@ -87,6 +89,19 @@ model Prices {
     authorId  String
     post      Post     @relation(fields: [postId], references: [id])
     postId    String
+}
+
+model Sales {
+    id          String   @id @default(cuid())
+    price       Int
+    soldAt      DateTime @default(now())
+    author      User     @relation(fields: [authorEmail], references: [email])
+    authorEmail String
+    amount      Int
+    item        Post     @relation(fields: [itemId], references: [id])
+    itemId      String
+    receiptId   String?
+    buyer       String
 }
 
 model Images {

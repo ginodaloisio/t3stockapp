@@ -190,4 +190,25 @@ export const stockRouter = router({
       });
       return updatedItem.id;
     }),
+  subtractItem: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        id: z.string(),
+        amount: z.number(),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const subtractedItem = await ctx.prisma.post.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          amount: {
+            decrement: input.amount,
+          },
+        },
+      });
+      return subtractedItem;
+    }),
 });
