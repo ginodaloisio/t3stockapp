@@ -52,4 +52,42 @@ export const saleRouter = router({
       take: 1,
     });
   }),
+  getSales: procedure
+    .use(isAuthorized)
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).nullish(),
+        cursor: z.string().nullish(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const limit = input.limit ?? 10;
+      const { cursor } = input;
+      const sales = await ctx.prisma.sales.findMany({
+        take: limit + 1,
+        cursor: cursor ? { id: cursor } : undefined,
+        include: {
+          item: {
+            include: {
+              images: {
+                orderBy: {
+                  createdAt: "desc",
+                },
+                take: 1,
+              },
+            },
+          },
+          author: true,
+        },
+      });
+      let nextCursor: typeof cursor | undefined = undefined;
+      if (sales.length > limit) {
+        const nextItem = sales.pop();
+        nextCursor = nextItem?.id;
+      }
+      return {
+        sales,
+        nextCursor,
+      };
+    }),
 });
