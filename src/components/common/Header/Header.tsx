@@ -6,6 +6,7 @@ import {
   PlusIcon,
   MinusSmallIcon,
   UserIcon,
+  ChartBarIcon,
 } from "@heroicons/react/24/outline";
 import ThemeButton from "./components/ThemeButton";
 
@@ -20,7 +21,8 @@ export const Header = () => {
         <HeaderItem title="INICIO" Icon={HomeIcon} goto="/" />
         <HeaderItem title="BUSCAR" Icon={MagnifyingGlassIcon} goto="/search" />
         <HeaderItem title="AGREGAR" Icon={PlusIcon} goto="/add" />
-        <HeaderItem title="REMOVER" Icon={MinusSmallIcon} goto="/remove" />
+        {/* <HeaderItem title="REMOVER" Icon={MinusSmallIcon} goto="/remove" /> */}
+        <HeaderItem title="VENTAS" Icon={ChartBarIcon} goto="/sales" />
         <HeaderItem title="CUENTA" Icon={UserIcon} goto="/account" />
         <ThemeButton />
       </div>
