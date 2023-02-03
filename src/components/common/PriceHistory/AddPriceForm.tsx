@@ -36,7 +36,10 @@ export const AddPriceForm = ({
 
   return (
     <>
-      <form onSubmit={onSubmit}>
+      <form
+        className="flex max-w-[300px] flex-col items-center lg:max-w-full lg:items-stretch"
+        onSubmit={onSubmit}
+      >
         {showError && (
           <label className="label">
             <span className="label-text-alt text-sm text-red-500">
