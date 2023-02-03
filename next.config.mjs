@@ -28,6 +28,7 @@ export default defineNextConfig({
       "githubusercontent.com",
       "googleusercontent.com",
       "lh3.googleusercontent.com",
+      "images.unsplash.com",
     ],
   },
 });
